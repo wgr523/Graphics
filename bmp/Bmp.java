@@ -9,7 +9,7 @@ public class Bmp {
 	BufferedImage tag;
 	File showout;
 	
-	public Bmp(int h, int w) {
+	public Bmp(int w, int h) {
 		// TODO Auto-generated constructor stub
 		height=h;width=w;
 		tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -17,7 +17,7 @@ public class Bmp {
 	}
 	public Bmp() {
 		// TODO Auto-generated constructor stub
-		this(64,64);
+		this(geometry.Options.WIDTH,geometry.Options.HEIGHT);
 	}
 	public void setFile(String tmp) {
 		showout=new File(tmp);
@@ -55,25 +55,4 @@ public class Bmp {
 			e.printStackTrace();
 		}
 	}
-//	public static void main(String[] args) {
-//		Bmp x=new Bmp();
-//		x.go();
-//	}
-//	public void go(){  
-//		try{  
-////			//读入文件    
-////			File file = new File("1.bmp");    
-////			// 构造Image对象    
-////			BufferedImage src = javax.imageio.ImageIO.read(file);    
-////			int width = src.getWidth();    
-////			int height = src.getHeight();
-////			System.out.println(width+"<>"+height);
-////			// 放大边长  
-////			//绘制放大后的图片  
-//			tag.setRGB(1, 1, (0<<16)|(0<<8)|255);
-//			tag.setRGB(1, 1, (0<<16)|(0<<8)|255);
-//		}catch(Exception e){  
-//			e.printStackTrace();  
-//		}
-//	}  
 }

@@ -42,7 +42,7 @@ public class Point {
 		x*=d;y*=d;z*=d;
 	}
 	public double inner(Point p) {
-		return x*p.x+y*p.x+z*p.z;
+		return x*p.x+y*p.y+z*p.z;
 	}
 	
 	@Override

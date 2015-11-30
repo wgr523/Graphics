@@ -1,44 +1,57 @@
 package geometry;
 
-import java.awt.Shape;
-import java.util.ArrayList;
-
 import bmp.Bmp;
+import ray.Trace;
 
 public class Graphics {
 
-	static ArrayList<Sphere> list;
+//	static ArrayList<Sphere> list;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		list = new ArrayList<Sphere>();
-		Point point = new Point(0.0, 0.0, 0.0);
-		Line line = new Line(point, 1.0, 1.0, 1.0);
-		Point c = new Point(2.0,2.0,2.0);
-		Sphere circle = new Sphere(c, 1.0);
-		list.add(circle);
-		Sphere c2 = new Sphere(point, 2.0);
-		list.add(c2);
+		GManager manager = new GManager();
+		Camera camera = new Camera();
+		
+		Point c = new Point(2.5,1.25,.2);
+		Sphere circle = new Sphere(c, 0.8,(200<<16)+(100<<8)+4,.4,.2, 8);
+		circle.setReflection();
+		manager.add(circle);
+		Point c2=new Point(2.0, -1, .2);
+		Sphere circle2 = new Sphere(c2, 0.8);
+		circle2.setColor(65535);
+		circle2.setReflection();
+		manager.add(circle2);
+
+		Sphere l1 = new Sphere(new Point(-2,0,.8),.01);
+		l1.setLight(1);
+		manager.addLight(l1);
+//		System.out.println(l1.intersect(tmpline));
+//		System.out.println(manager.getIntersect(tmpline).point);
+//		System.out.println(manager.getIntersect(tmpline).obj.isLighted());
+
+
+		Sphere l2 = new Sphere(new Point(2,2.5,0), .01);
+		l2.setLight(1);
+		manager.addLight(l2);
+		Sphere l3 = new Sphere(new Point(2,-2.5,0), .01);
+		l3.setLight(1);
+		manager.addLight(l3);
+//		System.out.println(line);
+//		list.add(c2);
 //		System.out.println(circle.intersect(line));
 		// when draw, window and geometry should map
 		Bmp pic = new Bmp();
-		pic.setFile("he.jpg");
-		for (Sphere s:list) {
-			double tx=s.center.x/3.0;
-			double tz=(3.0-s.center.z)/3.0;
-			for (double ix=-s.radius;ix<=s.radius;ix+=0.005)
-				for (double iz=-s.radius;iz<=s.radius;iz+=0.005) {
-					Point tmp = new Point(ix+s.center.x,s.center.y,iz+s.center.z);
-					tmp.minus(s.center);
-					if (tmp.modulo2()<=s.radius) {
-						double ttx=ix+s.center.x/3.0;
-						double ttz=(3.0-iz-s.center.z)/3.0;
-						pic.setPixelDouble(ttx, ttz, s.color);
-					}
-				}
-			
+		pic.setFile("he4.bmp");
+		Trace trace = new Trace(manager);
+		for (int ix=0;ix<Options.WIDTH;ix++){
+			for (int iy=0;iy<Options.HEIGHT;iy++) {
+				int intclr;
+				intclr = trace.rayTracer(camera.getLineOfPixel(ix, iy), 0);
+				pic.setPixel(ix, iy, Options.WHITE-intclr);
+			}
+			System.out.println(100*ix/(Options.WIDTH-1)+" %");
 		}
-//		pic.setPixelDouble(0.5, 0.5, 0, 128, 255);
 		pic.write();
+		
 	}
 
 }

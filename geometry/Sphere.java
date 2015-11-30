@@ -1,38 +1,48 @@
 package geometry;
 
-import java.util.Random;
-
 public class Sphere extends Base {
 	double radius;
-	Point center;
 	
 	public Sphere(Point c, double d) {
 		// TODO Auto-generated constructor stub
+		super();
 		radius = d;
 		center = c;
-		color = new Random().nextInt(65536);
 	}
 	
+	public Sphere(Point c, double d, int color, double rhod, double rhos, double s) {
+		// TODO Auto-generated constructor stub
+		super(color, rhod, rhos, s);
+		radius = d;
+		center = c;
+	}
+
 	@Override
-	public Point intersect (Line l) {
-		// only compute the first, outer side point. else return null
+	public double normalInner(Line l, Point p) {
+		// TODO Auto-generated method stub
+		if (p==null || l==null) return 0;
+		Point point = getNormal(p);
+		return Math.abs(point.inner(l.w));
+	}
+
+	@Override
+	public T_Point intersect_T(Line l) {
+		// TODO Auto-generated method stub
 		double ret;
-		final double a=1.0;
+//		double a=1.0;//l.w.modulo2();
 		Point tmp = new Point(l);
 		tmp.minus(center);
 		double b=tmp.inner(l.w)*2;
 		double c=tmp.modulo2()-radius*radius;
-		double delta=b*b-4*a*c;
+		double delta=b*b-(4*c);
 		if (delta<0) return null;
-		if (delta==0) ret = -b/a/2;
-		else ret = (-b-Math.sqrt(delta))/a/2;
-		if (ret<0) return null;
+//		if (delta==0) ret = (-b/a)/2; else 
+		ret = (-b-Math.sqrt(delta))/2;
+		if (ret<Options.DOUBLE_EPS) return null;
 		tmp = new Point(l.w);
 		tmp.times(ret);
-		Point tmp2 = new Point(l);
-		tmp2.plus(tmp);
-		return tmp2;
-//		double c=(l.x-center.x)*(l.x-center.x)+(l.y-center.y)*(l.y-center.y)+(l.z-center.z)*(l.z-center.z);
+		tmp.plus(l);
+		return new T_Point(ret, tmp);
 	}
 
 }
