@@ -6,6 +6,7 @@ import geometry.GManager;
 import geometry.Line;
 import geometry.Options;
 import geometry.Point;
+import geometry.Sphere;
 
 public class Trace {
 	GManager manager;
@@ -29,8 +30,9 @@ public class Trace {
 			}
 			int color = Options.colorTimes(ret.obj.getColor(), Options.AMBIENT);
 			Point norm = ret.obj.getNormal(ret.point); // normal vec
-			Line r = ret.obj.reflect(line, ret.point); // reflect vec
-			for (Base light : manager.lights) {
+			for (Base baselight : manager.lights) 
+			if (baselight instanceof Sphere){
+				Sphere light = (Sphere) baselight;
 				Point lc = new Point(light.getCenter());
 				lc.minus(ret.point);
 				Point tmp = new Point(lc);
@@ -70,6 +72,7 @@ public class Trace {
 			//						Options.colorTimes(rayTracer(v, depth+1) , 
 			//								ww.modulo()*Model.Phong(v, line, ret.obj, ret.point, r)));
 			if (ret.obj.isReflection()) {
+				Line r = ret.obj.reflect(line, ret.point); // reflect vec
 				color = Options.colorPlus(color , rayTracer(r, depth+1));
 			}
 			//				return ret.obj.getColor();

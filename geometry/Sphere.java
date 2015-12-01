@@ -2,6 +2,7 @@ package geometry;
 
 public class Sphere extends Base {
 	double radius;
+	Point center;
 	
 	public Sphere(Point c, double d) {
 		// TODO Auto-generated constructor stub
@@ -15,14 +16,6 @@ public class Sphere extends Base {
 		super(color, rhod, rhos, s);
 		radius = d;
 		center = c;
-	}
-
-	@Override
-	public double normalInner(Line l, Point p) {
-		// TODO Auto-generated method stub
-		if (p==null || l==null) return 0;
-		Point point = getNormal(p);
-		return Math.abs(point.inner(l.w));
 	}
 
 	@Override
@@ -44,5 +37,16 @@ public class Sphere extends Base {
 		tmp.plus(l);
 		return new T_Point(ret, tmp);
 	}
-
+	
+	public Point getCenter() {
+		// TODO Auto-generated method stub
+		return center;
+	}
+	
+	public Point getNormal(Point p) {
+		// TODO Auto-generated method stub
+		Point t = new Point(p);
+		t.minus(center);
+		return t.normalize();
+	}
 }

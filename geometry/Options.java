@@ -44,6 +44,7 @@ public static int colorPlus(int a,int b){
 	return (c1<<16)+(c2<<8)+c3;
 }
 	public static int colorTimes(int a,double b){
+		if (b<0) b=-b;
 		double a1,a2,a3;
 		a1=(a>>16)%CMAX;
 		a2=(a>>8)%CMAX;
@@ -54,5 +55,10 @@ public static int colorPlus(int a,int b){
 		c2=(int)a2;
 		c3=(int)a3;
 		return (c1<<16)+(c2<<8)+c3;
+	}
+	
+	public static double deterministic (Point a, Point b, Point c) {
+		return a.x*b.y*c.z + a.y*b.z*c.x + a.z*b.x*c.y
+				- c.x*b.y*a.z - c.y*b.z*a.x - c.z*b.x*a.y;
 	}
 }

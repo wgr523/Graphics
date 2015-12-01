@@ -7,7 +7,7 @@ public abstract class Base {
 	double snell;
 	double light;
 	double rhod,rhos,s;
-	Point center;
+	
 	public Base() {
 		// TODO Auto-generated constructor stub
 		reflection=false;deflection=false;color=Options.WHITE;//color is white?
@@ -34,12 +34,7 @@ public abstract class Base {
 		return null;
 	}
 	
-	public Point getNormal(Point p) {
-		// TODO Auto-generated method stub
-		Point t = new Point(p);
-		t.minus(center);
-		return t.normalize();
-	}
+	abstract public Point getNormal(Point p);
 	
 	public Line reflect(Line l, Point p) {
 		// TODO Auto-generated method stub
@@ -55,7 +50,14 @@ public abstract class Base {
 		tmp.plus(p);
 		return new Line(tmp, point);
 	}
-	abstract public double normalInner (Line l, Point p);
+	
+	public double normalInner(Line l, Point p) {
+		// TODO Auto-generated method stub
+		if (p==null || l==null) return 0;
+		Point point = getNormal(p);
+		return Math.abs(point.inner(l.w));
+	}
+	
 	public void setColor(int clr) {
 		color = clr;
 	}
@@ -90,8 +92,5 @@ public abstract class Base {
 		// TODO Auto-generated method stub
 		return lighted;
 	}
-	public Point getCenter() {
-		// TODO Auto-generated method stub
-		return center;
-	}
+	
 }
