@@ -31,11 +31,21 @@ public class Sphere extends Base {
 		if (delta<0) return null;
 //		if (delta==0) ret = (-b/a)/2; else 
 		ret = (-b-Math.sqrt(delta))/2;
-		if (ret<Options.DOUBLE_EPS) return null;
-		tmp = new Point(l.w);
-		tmp.times(ret);
-		tmp.plus(l);
-		return new T_Point(ret, tmp);
+		if (ret>Options.DOUBLE_EPS) {
+			tmp = new Point(l.w);
+			tmp.times(ret);
+			tmp.plus(l);
+			return new T_Point(ret, tmp);
+		}
+		else {
+			ret = (-b+Math.sqrt(delta))/2;
+			if (ret<Options.DOUBLE_EPS)
+				return null;
+			tmp = new Point(l.w);
+			tmp.times(ret);
+			tmp.plus(l);
+			return new T_Point(ret, tmp);
+		}
 	}
 	
 	public Point getCenter() {

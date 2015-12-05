@@ -4,13 +4,25 @@ public class Camera {
 	Point view;
 	Point lu; // left up starting point
 	Point vecx, vecy; //two directions of x,y axis, length matters!
-	
+
 	public Camera() {
 		// TODO Auto-generated constructor stub
-		view = new Point(-20.0, 0.0, 0.0);
-		lu= new Point(-12.0,-1.0,1.0);
-		vecx = new Point(0, .0025, 0);
-		vecy = new Point(0, 0, -.0025);
+
+	}
+	public Camera(int in) {
+		// TODO Auto-generated constructor stub
+		if (in==1) {
+			view = new Point(-20.0, 0.0, 0.0);
+			lu= new Point(-12.0,-1.0,1.0);
+			vecx = new Point(0, .005, 0);
+			vecy = new Point(0, 0, -.005);
+		}
+		else {
+			view = new Point(0.0, 20.0, 0.0);
+			lu= new Point(-1.0,12.0,1.0);
+			vecx = new Point(.005, 0,  0);
+			vecy = new Point(0, 0, -.005);
+		}
 	}
 	public Line getLineOfPixel (int x, int y) {
 		Point tx=new Point(vecx);

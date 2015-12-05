@@ -11,7 +11,7 @@ public class Bmp {
 	
 	public Bmp(int w, int h) {
 		// TODO Auto-generated constructor stub
-		height=h;width=w;
+		width=w;height=h;
 		tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		tag.createGraphics();
 	}

@@ -35,8 +35,8 @@ public class Trace {
 				Sphere light = (Sphere) baselight;
 				Point lc = new Point(light.getCenter());
 				lc.minus(ret.point);
-				Point tmp = new Point(lc);
-				tmp.times(-Options.DOUBLE_EPS);
+				Point tmp = new Point(norm);
+				tmp.times(Options.DOUBLE_EPS);
 				tmp.plus(ret.point);
 				Line tolight = new Line(tmp, lc);
 				Base_Point shed = manager.getIntersect(tolight);
@@ -73,7 +73,16 @@ public class Trace {
 			//								ww.modulo()*Model.Phong(v, line, ret.obj, ret.point, r)));
 			if (ret.obj.isReflection()) {
 				Line r = ret.obj.reflect(line, ret.point); // reflect vec
-				color = Options.colorPlus(color , rayTracer(r, depth+1));
+				color = Options.colorPlus(color , 
+						Options.colorTimes(
+								rayTracer(r, depth+1), ret.obj.getRhoreflect()));
+			}
+			//&& norm.inner(line.w)<-.6
+			if (ret.obj.isRefraction() ) {
+				Line r = ret.obj.refract(line, ret.point); // refract vec
+				color = Options.colorPlus(color , 
+						Options.colorTimes(
+								rayTracer(r, depth+1), ret.obj.getRhorefract()));
 			}
 			//				return ret.obj.getColor();
 			//				return Options.colorInner(ret.obj.getColor() , color);

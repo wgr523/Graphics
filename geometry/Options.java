@@ -1,8 +1,8 @@
 package geometry;
 
 public final class Options {
-	public static final int WIDTH= 800;
-	public static final int HEIGHT= 600;
+	public static final int WIDTH= 400;
+	public static final int HEIGHT= 400;
 	public static final int CMAX= 256;
 	public static final int MAXDEPTH= 4;
 	public static final double SMALLANG = Math.PI/4;

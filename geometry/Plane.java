@@ -3,7 +3,6 @@ package geometry;
 public class Plane extends Base {
 	Double d;
 	Point n;
-	Point x0,x1,x2;
 	public Plane(Point x, double d) {
 		// TODO Auto-generated constructor stub
 		super();
@@ -16,12 +15,6 @@ public class Plane extends Base {
 		super();
 		n=x.normalize();
 		this.d=-x.inner(d);
-	}
-	
-	public void setBound(Point x0,Point x1,Point x2) {
-		this.x0 = x0;
-		this.x1 = x1;
-		this.x2 = x2;
 	}
 	
 	@Override
