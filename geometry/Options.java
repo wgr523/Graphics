@@ -61,4 +61,9 @@ public static int colorPlus(int a,int b){
 		return a.x*b.y*c.z + a.y*b.z*c.x + a.z*b.x*c.y
 				- c.x*b.y*a.z - c.y*b.z*a.x - c.z*b.x*a.y;
 	}
+	public static void two (Point a) {
+		Point b = new Point(a);
+		b.times(2);
+		a=b;
+	}
 }

@@ -34,7 +34,7 @@ public class Graphics {
 		triangle4.setColor(65535<<6);
 //		triangle4.setReflection();
 //		manager.add(triangle4);
-		Plane plane1 = new Plane(new Point(0,0,1), 10);
+		Plane plane1 = new BWPlane(new Point(0,0,1), 10);
 		manager.add(plane1);
 		Plane plane2 = new Plane(new Point(0,-1,0), 10);
 		manager.add(plane2);

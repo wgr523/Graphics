@@ -105,6 +105,9 @@ public abstract class Base {
 	public int getColor() {
 		return color;
 	}
+	public int getColor(Point p) {
+		return color;
+	}
 	public boolean isReflection() {
 		return reflection;
 	}

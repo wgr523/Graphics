@@ -25,10 +25,10 @@ public class Trace {
 				//				 乘以光强度(1 or other double)。
 //				System.out.println("Guang!");
 //				return Options.WHITE;
-				return Options.colorTimes(ret.obj.getColor(),ret.obj.getLight());
+				return Options.colorTimes(ret.obj.getColor(ret.point),ret.obj.getLight());
 //				color = Options.colorPlus(color , Options.colorTimes(ret.obj.getColor(),ret.obj.getLight()));
 			}
-			int color = Options.colorTimes(ret.obj.getColor(), Options.AMBIENT);
+			int color = Options.colorTimes(ret.obj.getColor(ret.point), Options.AMBIENT);
 			Point norm = ret.obj.getNormal(ret.point); // normal vec
 			for (Base baselight : manager.lights) 
 			if (baselight instanceof Sphere){
@@ -45,17 +45,14 @@ public class Trace {
 				if (shed != null && shed.obj!=null && shed.obj.equals(light)) {
 //					System.out.println("Mei you dang guang!!");
 					color = Options.colorPlus(color , 
-							Options.colorInner( ret.obj.getColor(),
-							Options.colorTimes(shed.obj.getColor(),
+							Options.colorInner( ret.obj.getColor(ret.point),
+							Options.colorTimes(shed.obj.getColor(shed.point),
 									tolight.w.inner(norm)*
 									ret.obj.getRhod()*
 									shed.obj.getLight())));
-//					if (tolight.w.inner(norm)*
-//					Model.S(tolight.w, line.w, norm, ret.obj.getS(), ret.obj.getRhos())*
-//					shed.obj.getLight()>1) System.out.println("OUt 1!!");
 					color = Options.colorPlus(color , 
-							Options.colorInner( ret.obj.getColor(),
-							Options.colorTimes(shed.obj.getColor(),
+							Options.colorInner( ret.obj.getColor(ret.point),
+							Options.colorTimes(shed.obj.getColor(shed.point),
 									tolight.w.inner(norm)*
 									Model.S(tolight.w, line.w, norm, ret.obj.getS(), ret.obj.getRhos())*
 //									Math.pow(norm.inner(tolight.w.normalize()), s)*rhos/Math.abs(norm.inner(line.w))*
@@ -77,7 +74,6 @@ public class Trace {
 						Options.colorTimes(
 								rayTracer(r, depth+1), ret.obj.getRhoreflect()));
 			}
-			//&& norm.inner(line.w)<-.6
 			if (ret.obj.isRefraction() ) {
 				Line r = ret.obj.refract(line, ret.point); // refract vec
 				color = Options.colorPlus(color , 
