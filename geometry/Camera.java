@@ -7,7 +7,10 @@ public class Camera {
 
 	public Camera() {
 		// TODO Auto-generated constructor stub
-
+		view = new Point(-20.0, 0.0, 0.0);
+		lu= new Point(-12.0,-1.0,1.0);
+		vecx = new Point(0, .005, 0);
+		vecy = new Point(0, 0, -.005);
 	}
 	public Camera(int in) {
 		// TODO Auto-generated constructor stub
@@ -24,6 +27,9 @@ public class Camera {
 			vecy = new Point(0, 0, -.005);
 		}
 	}
+	Point getView() {
+		return view;
+	}
 	public Line getLineOfPixel (int x, int y) {
 		Point tx=new Point(vecx);
 		Point ty=new Point(vecy);
@@ -31,7 +37,17 @@ public class Camera {
 		ty.times(y);
 		tx.plus(ty);
 		tx.plus(lu);
-		tx.minus(view);
-		return new Line(view, tx);
+		tx.minus(getView());
+		return new Line(getView(), tx);
+	}
+	public Line getLineOfPixelWithDelta (int x, int y, double dx, double dy) {
+		Point tx=new Point(vecx);
+		Point ty=new Point(vecy);
+		tx.times(dx+x);
+		ty.times(dy+y);
+		tx.plus(ty);
+		tx.plus(lu);
+		tx.minus(getView());
+		return new Line(getView(), tx);
 	}
 }

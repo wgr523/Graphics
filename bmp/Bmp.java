@@ -25,6 +25,20 @@ public class Bmp {
 	public void setPixel(int x,int y,int r,int g,int b) {
 		tag.setRGB(x, y, (r<<16)|(g<<8)|b);
 	}
+	public void setPixelReal(int x,int y,double a1,double a2,double a3) {
+		if (a1>1) a1=1;
+		if (a2>1) a2=1;
+		if (a3>1) a3=1;
+		if (a1<0) a1=0;
+		if (a2<0) a2=0;
+		if (a3<0) a3=0;
+		a1=1-a1;a2=1-a2;a3=1-a3;
+		int r, g, b;
+		r=(int)(a1*255.99999);
+		g=(int)(a2*255.99999);
+		b=(int)(a3*255.99999);
+		tag.setRGB(x, y, (r<<16)|(g<<8)|b);
+	}
 	public void setPixel(int x,int y,int rgb) {
 		tag.setRGB(x, y, rgb);
 	}

@@ -11,9 +11,9 @@ public class BWPlane extends Plane {
 	}
 
 	@Override
-	public int getColor(Point p) {
+	public Point getColor(Point p) {
 		// TODO Auto-generated method stub
-		int tmp = (int)(p.x/4+1000)+(int)(p.y/4+1000);
-		return tmp%2==0?Options.WHITE:0;
+		int tmp = (int)(p.x/4-1000)+(int)(p.y/4-1000);
+		return tmp%2==0?Options.WHITE():Options.BACKGROUND();
 	}
 }

@@ -1,25 +1,76 @@
 package ray;
 
+import bmp.Bmp;
 import geometry.Base;
 import geometry.Base_Point;
+import geometry.Camera;
+import geometry.Cube;
 import geometry.GManager;
 import geometry.Line;
 import geometry.Options;
 import geometry.Point;
 import geometry.Sphere;
+import geometry.T_Point_Obj_Normal;
 
 public class Trace {
 	GManager manager;
-	public Trace(GManager manager) {
+	Camera camera;
+	public Trace(GManager manager, Camera camera) {
 		// TODO Auto-generated constructor stub
-		this.manager = manager;
+		this.manager = manager;this.camera=camera;
 	}
-	public int rayTracer(Line line, int depth){//, Integer color) {
+	public void workOutPicture(Bmp pic)
+	{
+		for (int ix=0;ix<Options.WIDTH;ix++){
+			for (int iy=0;iy<Options.HEIGHT;iy++) {
+				Point intclr;
+				intclr = rayTracer(camera.getLineOfPixel(ix, iy), 0);
+				pic.setPixelReal(ix, iy, intclr.x, intclr.y, intclr.z);
+			}
+			System.out.println(100*ix/(Options.WIDTH-1)+" %");
+		}
+	}
+	public void workOutPictureAA(Bmp pic)
+	{
+		final int num=6;
+		final double del = (double)1/num;
+		for (int ix=0;ix<Options.WIDTH;ix++){
+			for (int iy=0;iy<Options.HEIGHT;iy++){
+				Point intclr=new Point();
+				for (int id=0;id<num;id++)
+					for (int jd=0;jd<num;jd++)
+						for (int n=0;n<num;n++){
+							intclr.plus( rayTracer(camera.getLineOfPixelWithDelta(ix, iy, del*id+del*Math.random(), del*jd+del*Math.random()), 0));
+						}
+				intclr.times(del*del*del);
+				pic.setPixelReal(ix, iy, intclr.x, intclr.y, intclr.z);
+			}
+			System.out.println(100*ix/(Options.WIDTH-1)+" %");
+		}
+	}
+	public void workOutPictureFocus(Bmp pic)
+	{
+		final int num=128;
+		final double del = (double)1/num;
+		for (int ix=0;ix<Options.WIDTH;ix++){
+			for (int iy=0;iy<Options.HEIGHT;iy++){
+				Point intclr=new Point();
+				for (int n=0;n<num;n++){
+					intclr.plus( rayTracer(camera.getLineOfPixel(ix, iy) ,0));
+				}
+				intclr.times(del);
+				pic.setPixelReal(ix, iy, intclr.x, intclr.y, intclr.z);
+			}
+			System.out.println(100*ix/(Options.WIDTH-1)+" %");
+		}
+	}
+	
+	public Point rayTracer(Line line, int depth){//, Integer color) {
 		if (depth>Options.MAXDEPTH) {
-			return Options.BACKGROUND;
+			return Options.BACKGROUND();
 		} //background color, over depth and no intersection
-		Base_Point ret = manager.getIntersect(line);
-		if (ret == null || ret.point == null) {return Options.BACKGROUND;}//background color, no intersection at all
+		T_Point_Obj_Normal ret = manager.getIntersect(line);
+		if (ret == null || ret.point == null) {return Options.BACKGROUND();}//background color, no intersection at all
 		else {
 			if (ret.obj.isLighted()) {
 				//				 乘以光强度(1 or other double)。
@@ -28,8 +79,8 @@ public class Trace {
 				return Options.colorTimes(ret.obj.getColor(ret.point),ret.obj.getLight());
 //				color = Options.colorPlus(color , Options.colorTimes(ret.obj.getColor(),ret.obj.getLight()));
 			}
-			int color = Options.colorTimes(ret.obj.getColor(ret.point), Options.AMBIENT);
-			Point norm = ret.obj.getNormal(ret.point); // normal vec
+			Point color = Options.colorTimes(ret.obj.getColor(ret.point), Options.AMBIENT);
+			Point norm = ret.normal; // normal vec
 			for (Base baselight : manager.lights) 
 			if (baselight instanceof Sphere){
 				Sphere light = (Sphere) baselight;
@@ -39,7 +90,7 @@ public class Trace {
 				tmp.times(Options.DOUBLE_EPS);
 				tmp.plus(ret.point);
 				Line tolight = new Line(tmp, lc);
-				Base_Point shed = manager.getIntersect(tolight);
+				T_Point_Obj_Normal shed = manager.getIntersect(tolight);
 //				double rhos=ret.obj.getRhos();
 //				double s=ret.obj.getS();
 				if (shed != null && shed.obj!=null && shed.obj.equals(light)) {

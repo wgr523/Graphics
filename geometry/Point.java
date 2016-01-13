@@ -41,6 +41,9 @@ public class Point {
 	public void times(double d) {
 		x*=d;y*=d;z*=d;
 	}
+	public void times(Point b) {
+		x*=b.x;y*=b.y;z*=b.z;
+	}
 	public double inner(Point p) {
 		return x*p.x+y*p.y+z*p.z;
 	}

@@ -1,8 +1,8 @@
 package geometry;
 
 public class Triangle extends Base {
-//	Double d;
-//	Point n;
+	Double d;
+	Point n;
 	Point x0,e1,e2;
 	
 	public Triangle(Point x0,Point x1,Point x2) {
@@ -13,10 +13,15 @@ public class Triangle extends Base {
 		tmp = new Point(x0);
 		tmp.minus(x2);
 		this.e2 = tmp;
+		n = new Point(
+				e1.z*e2.y-e1.y*e2.z, 
+				e2.x*e1.z-e2.z*e1.x, 
+				e1.x*e2.y-e1.y*e2.x).normalize();
+		d = -n.inner(this.x0);
 	}
 	
 	@Override
-	public T_Point intersect_T(Line l) {
+	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
 		double div = Options.deterministic(l.w, e1, e2);
 		Point s= new Point(x0);
@@ -31,16 +36,14 @@ public class Triangle extends Base {
 		Point tmp = new Point(l.w);
 		tmp.times(a1);
 		tmp.plus(l);
-		return new T_Point(a1, tmp);
+		return new T_Point_Obj_Normal(a1, tmp, this, getNormal(tmp));
 	}
 
 	@Override
 	public Point getNormal(Point p) {
 		// TODO Auto-generated method stub
-		return new Point(
-				e1.z*e2.y-e1.y*e2.z, 
-				e2.x*e1.z-e2.z*e1.x, 
-				e1.x*e2.y-e1.y*e2.x).normalize();
+		if (n.inner(p)+d>Options.DOUBLE_EPS) return null;
+		return new Point(n);
 	}
 	
 }

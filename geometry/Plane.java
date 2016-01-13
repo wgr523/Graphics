@@ -18,14 +18,14 @@ public class Plane extends Base {
 	}
 	
 	@Override
-	public T_Point intersect_T(Line l) {
+	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
 		double ret = -(n.inner(l)+d)/(n.inner(l.w));
 		if (ret<Options.DOUBLE_EPS) return null;
 		Point tmp = new Point(l.w);
 		tmp.times(ret);
 		tmp.plus(l);
-		return new T_Point(ret, tmp);
+		return new T_Point_Obj_Normal(ret, tmp, this, n);
 	}
 
 	@Override

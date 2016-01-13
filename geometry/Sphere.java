@@ -11,7 +11,7 @@ public class Sphere extends Base {
 		center = c;
 	}
 	
-	public Sphere(Point c, double d, int color, double rhod, double rhos, double s) {
+	public Sphere(Point c, double d, Point color, double rhod, double rhos, double s) {
 		// TODO Auto-generated constructor stub
 		super(color, rhod, rhos, s);
 		radius = d;
@@ -19,7 +19,7 @@ public class Sphere extends Base {
 	}
 
 	@Override
-	public T_Point intersect_T(Line l) {
+	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
 		double ret;
 //		double a=1.0;//l.w.modulo2();
@@ -35,7 +35,7 @@ public class Sphere extends Base {
 			tmp = new Point(l.w);
 			tmp.times(ret);
 			tmp.plus(l);
-			return new T_Point(ret, tmp);
+			return new T_Point_Obj_Normal(ret, tmp, this, getNormal(tmp));
 		}
 		else {
 			ret = (-b+Math.sqrt(delta))/2;
@@ -44,13 +44,20 @@ public class Sphere extends Base {
 			tmp = new Point(l.w);
 			tmp.times(ret);
 			tmp.plus(l);
-			return new T_Point(ret, tmp);
+			return new T_Point_Obj_Normal(ret, tmp, this, getNormal(tmp));
 		}
 	}
 	
 	public Point getCenter() {
 		// TODO Auto-generated method stub
-		return center;
+		if (!lighted)
+			return center;
+		Point ret = new Point(center);
+		double theta=Math.random()*Math.PI*2;
+		double phi=Math.random()*Math.PI;
+		double rad=Math.random()*radius;
+		ret.plus(new Point(rad*Math.cos(phi)*Math.cos(theta), rad*Math.cos(phi)*Math.sin(theta), rad*Math.sin(phi)));
+		return ret;
 	}
 	
 	public Point getNormal(Point p) {

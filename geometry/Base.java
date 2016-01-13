@@ -1,8 +1,7 @@
 package geometry;
 
-
 public abstract class Base {
-	int color;
+	Point color;
 	boolean reflection, refraction,lighted;
 	double snell;
 	double light;
@@ -11,16 +10,16 @@ public abstract class Base {
 	
 	public Base() {
 		// TODO Auto-generated constructor stub
-		reflection=false;refraction=false;color=Options.WHITE;//color is white?
+		reflection=false;refraction=false;color = new Point(Options.WHITE());//color is white?
 		light=0;lighted=false;
 		rhod=.4;
 		rhos=.3;
 		s=6;
 		snell=1.5;
 	}
-	public Base(int color, double rhod,double rhos,double s) {
+	public Base(Point color, double rhod,double rhos,double s) {
 		// TODO Auto-generated constructor stub
-		reflection=false;refraction=false;this.color = color;//color is white?
+		reflection=false;refraction=false;this.color =new Point(color);//color is white?
 		light=0;lighted=false;
 		this.rhod=rhod;
 		this.rhos=rhos;
@@ -28,10 +27,10 @@ public abstract class Base {
 		snell=1.5;
 	}
 	
-	abstract public T_Point intersect_T (Line l);
+	abstract public T_Point_Obj_Normal intersect_Everyone (Line l);
 	public Point intersect (Line l) {
 		// only compute the first, outer side point. else return null
-		T_Point tmp = intersect_T(l);
+		T_Point_Obj_Normal tmp = intersect_Everyone(l);
 		if (tmp != null)
 			return tmp.point;
 		return null;
@@ -87,8 +86,11 @@ public abstract class Base {
 		return Math.abs(point.inner(l.w));
 	}
 	
-	public void setColor(int clr) {
-		color = clr;
+	public void setColor(Point clr) {
+		color.x=clr.x;color.y=clr.y;color.z=clr.z;
+	}
+	public void setColor(double x1, double x2, double x3) {
+		color.x=x1;color.y=x2;color.z=x3;
 	}
 	public void setSnell(double s) {
 		snell = s;
@@ -102,10 +104,10 @@ public abstract class Base {
 	public void setRefraction() {
 		refraction=true;rhorefract=0.9;rhod=.1;rhos=.1;
 	}
-	public int getColor() {
+	public Point getColor() {
 		return color;
 	}
-	public int getColor(Point p) {
+	public Point getColor(Point p) {
 		return color;
 	}
 	public boolean isReflection() {

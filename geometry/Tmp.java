@@ -4,12 +4,13 @@ public class Tmp {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Cube cuu = new Cube(new Point(0,-1,0));
+//		cuu.setColor(1, 0,0);
+		Line tmpline = new Line(new Point(-.5,0,0), 1,-1,1);
 
-		Point tmppoint = new Point(-1,2,0);
-		Options.two(tmppoint);
-		System.out.println(tmppoint);
+		System.out.println(cuu.intersect(tmpline));
+		System.out.println(cuu.intersect_Everyone(tmpline).normal);
 		/*
-		Line tmpline = new Line(tmppoint, 1,-1,0);
 		Sphere or = new Sphere(new Point(), 1);
 		Line r1 = or.refractIn(tmpline,or.intersect(tmpline));
 		System.out.println(or.getNormal(or.intersect(tmpline)));
