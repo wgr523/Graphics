@@ -2,7 +2,6 @@ package ray;
 
 import bmp.Bmp;
 import geometry.Base;
-import geometry.Base_Point;
 import geometry.Camera;
 import geometry.Cube;
 import geometry.GManager;
@@ -69,7 +68,7 @@ public class Trace {
 		if (depth>Options.MAXDEPTH) {
 			return Options.BACKGROUND();
 		} //background color, over depth and no intersection
-		T_Point_Obj_Normal ret = manager.getIntersect(line);
+		T_Point_Obj_Normal ret = manager.getIntersect(line,0);
 		if (ret == null || ret.point == null) {return Options.BACKGROUND();}//background color, no intersection at all
 		else {
 			if (ret.obj.isLighted()) {
@@ -81,7 +80,7 @@ public class Trace {
 			}
 			Point color = Options.colorTimes(ret.obj.getColor(ret.point), Options.AMBIENT);
 			Point norm = ret.normal; // normal vec
-			for (Base baselight : manager.lights) 
+			for (Base baselight : manager.getLights(0)) 
 			if (baselight instanceof Sphere){
 				Sphere light = (Sphere) baselight;
 				Point lc = new Point(light.getCenter());
@@ -90,7 +89,7 @@ public class Trace {
 				tmp.times(Options.DOUBLE_EPS);
 				tmp.plus(ret.point);
 				Line tolight = new Line(tmp, lc);
-				T_Point_Obj_Normal shed = manager.getIntersect(tolight);
+				T_Point_Obj_Normal shed = manager.getIntersect(tolight,0);
 //				double rhos=ret.obj.getRhos();
 //				double s=ret.obj.getS();
 				if (shed != null && shed.obj!=null && shed.obj.equals(light)) {
@@ -120,13 +119,13 @@ public class Trace {
 			//						Options.colorTimes(rayTracer(v, depth+1) , 
 			//								ww.modulo()*Model.Phong(v, line, ret.obj, ret.point, r)));
 			if (ret.obj.isReflection()) {
-				Line r = ret.obj.reflect(line, ret.point); // reflect vec
+				Line r = ret.obj.reflect(line, ret.point, norm); // reflect vec
 				color = Options.colorPlus(color , 
 						Options.colorTimes(
 								rayTracer(r, depth+1), ret.obj.getRhoreflect()));
 			}
 			if (ret.obj.isRefraction() ) {
-				Line r = ret.obj.refract(line, ret.point); // refract vec
+				Line r = ret.obj.refract(line, ret.point, norm); // refract vec
 				color = Options.colorPlus(color , 
 						Options.colorTimes(
 								rayTracer(r, depth+1), ret.obj.getRhorefract()));

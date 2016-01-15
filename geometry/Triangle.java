@@ -3,10 +3,10 @@ package geometry;
 public class Triangle extends Base {
 	Double d;
 	Point n;
-	Point x0,e1,e2;
+	Point x0,x1,x2,e1,e2;
 	
 	public Triangle(Point x0,Point x1,Point x2) {
-		this.x0 = x0;
+		this.x0 = x0; this.x1=x1; this.x2=x2;
 		Point tmp = new Point(x0);
 		tmp.minus(x1);
 		this.e1 = tmp;
@@ -17,6 +17,7 @@ public class Triangle extends Base {
 				e1.z*e2.y-e1.y*e2.z, 
 				e2.x*e1.z-e2.z*e1.x, 
 				e1.x*e2.y-e1.y*e2.x).normalize();
+		n.times(-1);
 		d = -n.inner(this.x0);
 	}
 	
@@ -42,8 +43,8 @@ public class Triangle extends Base {
 	@Override
 	public Point getNormal(Point p) {
 		// TODO Auto-generated method stub
-		if (n.inner(p)+d>Options.DOUBLE_EPS) return null;
-		return new Point(n);
+//		if (n.inner(p)+d>Options.DOUBLE_EPS) return null;
+		return n;
 	}
 	
 }

@@ -14,6 +14,25 @@ public class BWPlane extends Plane {
 	public Point getColor(Point p) {
 		// TODO Auto-generated method stub
 		int tmp = (int)(p.x/4-1000)+(int)(p.y/4-1000);
-		return tmp%2==0?Options.WHITE():Options.BACKGROUND();
+		return tmp%2==0?Options.WHITE():Options.GREY();
 	}
+	
+//	@Override
+//	public Point getNormal(Point p) {
+//		// TODO Auto-generated method stub
+//		final double rr=.1;
+//		Point tmp = new Point(n);
+//		double theta = ((p.x/4+p.y/4)%1)*Math.PI*rr;
+//		double phi = ((p.x/4+p.y/4)%2)*Math.PI*rr;
+//		double sinn = Math.sin(theta), coss = Math.cos(theta);
+//		tmp.times(coss);
+//		Point tmpx,tmpy;
+//		tmpx = new Point(1,0,0);
+//		tmpy = new Point(0,1,0);
+//		tmpx.times(sinn*Math.cos(phi));
+//		tmpy.times(sinn*Math.sin(phi));
+//		tmp.plus(tmpx);
+//		tmp.plus(tmpy);
+//		return tmp;
+//	}
 }

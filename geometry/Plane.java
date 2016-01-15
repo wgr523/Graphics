@@ -25,7 +25,7 @@ public class Plane extends Base {
 		Point tmp = new Point(l.w);
 		tmp.times(ret);
 		tmp.plus(l);
-		return new T_Point_Obj_Normal(ret, tmp, this, n);
+		return new T_Point_Obj_Normal(ret, tmp, this, getNormal(tmp));
 	}
 
 	@Override

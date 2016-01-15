@@ -35,10 +35,10 @@ public abstract class Base {
 			return tmp.point;
 		return null;
 	}
-	public Line refractIn (Line l, Point p) {
-		double cos1 = (getNormal(p).inner(l.w));//note sgn problem
+	public Line refractIn (Line l, Point p, Point n) {
+		double cos1 = (n.inner(l.w));//note sgn problem
 		double tmp1 = Math.sqrt(snell*snell+cos1*cos1-1)+cos1;
-		Point ret = new Point(getNormal(p));
+		Point ret = new Point(n);
 		ret.times(-tmp1);
 		ret.plus(l.w);
 		Point tmp2 = new Point(ret);
@@ -46,10 +46,10 @@ public abstract class Base {
 		tmp2.plus(p);
 		return new Line(tmp2, ret);
 	}
-	public Line refractOut (Line l, Point p) {
-		double cos1 = (getNormal(p).inner(l.w));//note sgn problem
+	public Line refractOut (Line l, Point p, Point n) {
+		double cos1 = (n.inner(l.w));//note sgn problem
 		double tmp1 = -snell*cos1-Math.sqrt(snell*snell*(cos1*cos1-1)+1);
-		Point ret = new Point(getNormal(p));
+		Point ret = new Point(n);
 		ret.times(-tmp1);
 		ret.plus(l.w);
 		Point tmp2 = new Point(ret);
@@ -57,17 +57,17 @@ public abstract class Base {
 		tmp2.plus(p);
 		return new Line(tmp2, ret);
 	}
-	public Line refract(Line l, Point p) {
-		Line tmpl = refractIn(l, p);
-		Point tmpp = intersect(tmpl);
-		return refractOut(tmpl, tmpp);
+	public Line refract(Line l, Point p, Point n) {
+		Line tmpl = refractIn(l, p, n);
+		T_Point_Obj_Normal tmpp = intersect_Everyone(tmpl);
+		return refractOut(tmpl, tmpp.point, tmpp.normal);
 	}
 	abstract public Point getNormal(Point p);
 	
-	public Line reflect(Line l, Point p) {
+	public Line reflect(Line l, Point p, Point n) {
 		// TODO Auto-generated method stub
 		if (p==null || l==null) return null;
-		Point point = getNormal(p);
+		Point point =  new Point(n);
 		Point distant = new Point(p);
 		distant.minus(l);
 		double dis = point.inner(distant);

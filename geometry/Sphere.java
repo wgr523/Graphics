@@ -25,6 +25,7 @@ public class Sphere extends Base {
 //		double a=1.0;//l.w.modulo2();
 		Point tmp = new Point(l);
 		tmp.minus(center);
+//		if (tmp.modulo2()<radius*radius) return new T_Point_Obj_Normal(0,null,null,null);
 		double b=tmp.inner(l.w)*2;
 		double c=tmp.modulo2()-radius*radius;
 		double delta=b*b-(4*c);

@@ -18,7 +18,9 @@ public class Point {
 		y=point.y;
 		z=point.z;
 	}
-	
+	public double get(int index) {
+		return index==0? x : (index==1) ? y : (index==2 ? z : 0);
+	}
 	public double modulo () {
 		return Math.sqrt(x*x+y*y+z*z);
 	}

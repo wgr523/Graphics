@@ -30,7 +30,7 @@ public class Camera {
 	Point getView() {
 		return view;
 	}
-	public Line getLineOfPixel (int x, int y) {
+	public synchronized Line getLineOfPixel (int x, int y) {
 		Point tx=new Point(vecx);
 		Point ty=new Point(vecy);
 		tx.times(x);
@@ -40,7 +40,7 @@ public class Camera {
 		tx.minus(getView());
 		return new Line(getView(), tx);
 	}
-	public Line getLineOfPixelWithDelta (int x, int y, double dx, double dy) {
+	public synchronized Line getLineOfPixelWithDelta (int x, int y, double dx, double dy) {
 		Point tx=new Point(vecx);
 		Point ty=new Point(vecy);
 		tx.times(dx+x);
