@@ -8,18 +8,16 @@ import java.util.Scanner;
 public class Complex extends Base {
 
 //	ArrayList<Triangle> list;
-	ArrayList<Point> points;
 	Kdtree root;
 	public Complex() {
 		// TODO Auto-generated constructor stub
 		super();
-//		list=new ArrayList<>();
-		points=new ArrayList<>();
 	}
 	public Complex(Point origin, double scale, String file, double r, double g, double b) {
 		// TODO Auto-generated constructor stub
 		super();
 //		list=new ArrayList<>();
+		ArrayList<Point> points;
 		points=new ArrayList<>();
 		HashSet<Triangle> set = new HashSet<>();
 		FileInputStream is;
@@ -30,7 +28,7 @@ public class Complex extends Base {
 			String readin;
 			int t1,t2,t3;
 			double d1,d2,d3;
-			Point clr = new Point(r,g,b);
+//			Point clr = new Point(r,g,b);
 			while (in.hasNext()) {
 				readin = in.next();
 				if (readin.charAt(0)=='#') in.nextLine();
@@ -39,7 +37,7 @@ public class Complex extends Base {
 						d1=in.nextDouble();
 						d2=in.nextDouble();
 						d3=in.nextDouble();
-						Point tmp = new Point(d1,d2,d3);
+						Point tmp = new Point(d3,d1,d2);
 						tmp.times(scale);
 						tmp.plus(origin);
 						points.add(tmp);
@@ -48,9 +46,11 @@ public class Complex extends Base {
 						t1=in.nextInt()-1;
 						t2=in.nextInt()-1;
 						t3=in.nextInt()-1;
-						Triangle tmp= new Triangle(points.get(t2),points.get(t1),points.get(t3) );
+						Triangle tmp= new Triangle(points.get(t1),points.get(t2),points.get(t3) );
 //						list.add(tmp);
-						tmp.setColor(clr);
+						tmp.setReflectionStill(.3);
+						tmp.setColor(r, g, b);
+//						tmp.setColor(clr);
 						set.add(tmp);
 					}
 				}
@@ -62,7 +62,9 @@ public class Complex extends Base {
 			e.printStackTrace();
 		}
 		root = Kdtree.createKdtree(set, 0);
-		System.out.println("Create ok!");
+		System.out.println(root.lo);
+		System.out.println(root.hi);
+		System.out.println("Create kd tree ok!");
 	}
 	
 	@Override
@@ -79,6 +81,7 @@ public class Complex extends Base {
 //			if (ret!=null)
 //				return ret;
 //		}
+		System.out.println("Shouldn't ask this obj!!!");
 		return null;
 	}
 
@@ -97,4 +100,5 @@ public class Complex extends Base {
 //			e.setColor(clr);
 //		}
 	}
+	
 }

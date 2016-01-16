@@ -101,6 +101,9 @@ public abstract class Base {
 	public void setReflection(double d) {
 		reflection=true;rhoreflect=d;rhod=.1;rhos=.4;
 	}
+	public void setReflectionStill(double d) {
+		reflection=true;rhoreflect=d;
+	}
 	public void setRefraction() {
 		refraction=true;rhorefract=0.9;rhod=.0;rhos=.0;
 	}

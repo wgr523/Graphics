@@ -10,7 +10,7 @@ public class Graphics {
 		// TODO Auto-generated method stub
 		GManager manager = new GManager();
 		Camera camera = new Camera();
-		double licen=0.02;
+		double licen=0.6;
 		Point cen;// = new Point(3, 0, 0);
 
 //		Cube cuu = new Cube(new Point(5,-2,2));
@@ -56,7 +56,7 @@ public class Graphics {
 ////		triangle4.setColor(65535<<6);
 //		triangle4.setReflection();
 //		manager.add(triangle4);
-		Plane plane1 = new BWPlane(new Point(0,0,1), 2);
+		Plane plane1 = new BWPlane(new Point(0,0,1), .71);
 		manager.add(plane1);
 		
 		Plane plane2;
@@ -75,10 +75,11 @@ public class Graphics {
 		plane2.setColor(0,0,1);
 		plane2.setReflection(0.8);
 		
-//		Base block = new Cube(new Point(-1.5, 0 ,0), 2, "arma.obj",0 , 0, 1);
-//		manager.add(block);
-		Base cuu = new Cube(new Point(0,2,0), .3);
-		manager.add(cuu);
+		Base block = new Complex(new Point(0, 0 ,0), 1, "dragon.obj",0 , 0, 1);
+//		block.setReflectionStill(.6);
+		manager.add(block);
+//		Base cuu = new Cube(new Point(0,2,0), .3);
+//		manager.add(cuu);
 //		Sphere l1;
 //		for (int i=-16;i<-9;i+=2)
 //		{
@@ -87,28 +88,29 @@ public class Graphics {
 //			manager.addLight(l1);
 //		}
 
-		Sphere l2 = new Sphere(new Point(-3,0,1), licen);
+		Sphere l2 = new Sphere(new Point(-3,0,2.8), licen);
 		l2.setLight(1);
 		manager.addLight(l2);
 //		l2 = new Sphere(new Point(-13,0.3,0), licen);
 //		l2.setLight(1);
 //		manager.addLight(l2);
-		l2 = new Sphere(new Point(2,0.5,3.3), licen);
+		l2 = new Sphere(new Point(2,0,3.3), licen);
 		l2.setLight(1);
 		manager.addLight(l2);
-		Sphere l3 = new Sphere(new Point(2,-.3,3.5), licen);
-		l3.setLight(1);
-		manager.addLight(l3);
+//		Sphere l3 = new Sphere(new Point(2,-.3,3.5), licen);
+//		l3.setLight(1);
+//		manager.addLight(l3);
 //		System.out.println(line);
 //		list.add(c2);
 //		System.out.println(circle.intersect(line));
 
 		Bmp pic = new Bmp();
-		pic.setFile("he14.bmp");
+		pic.setFile("final.bmp");
 		Trace trace = new Trace(manager,camera);
-		trace.workOutPicture(pic);
+		trace.workOutPictureAA(pic);
 		pic.write();
 		
+//		l2.setLight(.1);
 //		pic = new Bmp();
 //		pic.setFile("she.bmp");
 //		camera = new Camera(2);

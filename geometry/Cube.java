@@ -2,7 +2,7 @@ package geometry;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Collection;
+//import java.util.Collection;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -65,9 +65,9 @@ public class Cube extends Base {
 		}
 //		root = Kdtree.createKdtree(set, 0);
 		calcHiLo();
-		System.out.println("Create ok!");
-		System.out.println(lo);
-		System.out.println(hi);
+//		System.out.println("Create ok!");
+//		System.out.println(lo);
+//		System.out.println(hi);
 	}
 	public Cube(Point origin, double scale) {
 		// TODO Auto-generated constructor stub
@@ -131,7 +131,7 @@ public class Cube extends Base {
 	@Override
 	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
-//		if (! Kdtree.woo(lo, hi, l)) return new T_Point_Obj_Normal(0, null, null, null);
+		if (! Kdtree.haines(lo, hi, l)) return null;//new T_Point_Obj_Normal(0, null, null, null);
 		T_Point_Obj_Normal tmp;
 		double tmp2=Double.MAX_VALUE;
 		Point ret1 = null;

@@ -1,13 +1,13 @@
 package geometry;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 public final class Options {
 	public static final int WIDTH= 800;
 	public static final int HEIGHT= 400;
 	public static final int CMAX= 256;
+	public static final int SOFT=128;
+	public static final double DSOFT=0.0078125;
+//	public static final int SOFT=1;
+//	public static final double DSOFT=1;
 	public static final int MAXDEPTH= 3;
 	public static final double SMALLANG = Math.PI/4;
 	public static final double AMBIENT = .1;
@@ -76,8 +76,5 @@ public final class Options {
 		Point b = new Point(a);
 		b.times(2);
 		a=b;
-	}
-	public static T_Point_Obj_Normal nearestIntersect(Collection<Base> list, Line line) {
-		return null;
 	}
 }
