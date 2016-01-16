@@ -8,9 +8,12 @@ public class Camera {
 	public Camera() {
 		// TODO Auto-generated constructor stub
 		view = new Point(-20.0, 0.0, 0.0);
-		lu= new Point(-12.0,-1.0,1.0);
-		vecx = new Point(0, .005, 0);
-		vecy = new Point(0, 0, -.005);
+//		lu= new Point(-4,2.0,1.2);
+//		vecx = new Point(0, -.005, 0);
+//		vecy = new Point(0, 0, -.005);
+		lu= new Point(8,4.0,2.4);
+		vecx = new Point(0, -.01, 0);
+		vecy = new Point(0, 0, -.01);
 	}
 	public Camera(int in) {
 		// TODO Auto-generated constructor stub
@@ -21,10 +24,10 @@ public class Camera {
 			vecy = new Point(0, 0, -.005);
 		}
 		else {
-			view = new Point(0.0, 20.0, 0.0);
-			lu= new Point(-1.0,12.0,1.0);
+			view = new Point(0.0, 0.0, 20.0);
+			lu= new Point(-1.0,1.0,12.0);
 			vecx = new Point(.005, 0,  0);
-			vecy = new Point(0, 0, -.005);
+			vecy = new Point(0,  -.005, 0);
 		}
 	}
 	Point getView() {

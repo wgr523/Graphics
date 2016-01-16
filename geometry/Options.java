@@ -5,17 +5,21 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public final class Options {
-	public static final int WIDTH= 400;
+	public static final int WIDTH= 800;
 	public static final int HEIGHT= 400;
 	public static final int CMAX= 256;
-	public static final int MAXDEPTH= 2;
+	public static final int MAXDEPTH= 3;
 	public static final double SMALLANG = Math.PI/4;
 	public static final double AMBIENT = .1;
 	public static final double DOUBLE_EPS = 1e-6;
 	private static Point white;
 	private static Point black;
 	private static Point grey;
+	private static Point greey;
 	private static Point axis[];
+	public static Point LAW() {
+		return AXIS(0);
+	}
 	public static Point AXIS(int i)
 	{
 		if (i<0 || i>2) return null;
@@ -43,6 +47,11 @@ public final class Options {
 		if (grey==null) grey = new Point(.5,.5,.5);
 		return grey;
 	}
+	public static Point GREEY()
+	{
+		if (greey==null) greey = new Point(.9,.9,.9);
+		return greey;
+	}
 	public static Point colorInner(Point a,Point b){
 		Point ret = new Point(a);
 		ret.times(b);
@@ -69,18 +78,6 @@ public final class Options {
 		a=b;
 	}
 	public static T_Point_Obj_Normal nearestIntersect(Collection<Base> list, Line line) {
-		T_Point_Obj_Normal tmp=null, ret=null;
-		double tmp2=Double.MAX_VALUE;
-		for (Iterator<Base> it = list.iterator();it.hasNext();) {
-			Base obj = it.next();
-			tmp = obj.intersect_Everyone(line);
-			if (tmp!=null && tmp.point!=null) {
-				if (tmp.t < tmp2) {
-					tmp2=tmp.t;
-					ret=tmp;
-				}
-			}
-		}
-		return ret;
+		return null;
 	}
 }

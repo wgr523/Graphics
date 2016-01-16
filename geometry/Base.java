@@ -10,9 +10,9 @@ public abstract class Base {
 	
 	public Base() {
 		// TODO Auto-generated constructor stub
-		reflection=false;refraction=false;color = new Point(Options.WHITE());//color is white?
+		reflection=false;refraction=false;color = new Point(Options.GREY());//color is white?
 		light=0;lighted=false;
-		rhod=.4;
+		rhod=.9;
 		rhos=.3;
 		s=6;
 		snell=1.5;
@@ -96,13 +96,13 @@ public abstract class Base {
 		snell = s;
 	}
 	public void setLight(double l) {
-		light=l;lighted=true;
+		light=l;lighted=true;color = new Point(Options.WHITE());
 	}
-	public void setReflection() {
-		reflection=true;rhoreflect=.5;
+	public void setReflection(double d) {
+		reflection=true;rhoreflect=d;rhod=.1;rhos=.4;
 	}
 	public void setRefraction() {
-		refraction=true;rhorefract=0.9;rhod=.1;rhos=.1;
+		refraction=true;rhorefract=0.9;rhod=.0;rhos=.0;
 	}
 	public Point getColor() {
 		return color;

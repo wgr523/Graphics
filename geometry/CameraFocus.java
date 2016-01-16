@@ -1,7 +1,7 @@
 package geometry;
 
 public class CameraFocus extends Camera {
-	double ape=.005;//光圈
+	double ape=.02;//光圈
 	@Override
 	Point getView() {
 		// TODO Auto-generated method stub

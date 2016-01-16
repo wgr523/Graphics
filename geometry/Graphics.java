@@ -17,8 +17,7 @@ public class Graphics {
 //		cuu.setColor(.2, .1,.1);
 //		cuu.setReflection();
 //		manager.add(cuu);
-		Base block = new Cube(new Point(10,-3,0), 1, "cube.obj",.4, 0,0);
-		manager.add(block);
+		
 //		double raaa=0.8;
 //		for (int i=10;i>0;i--)
 //		{
@@ -30,12 +29,15 @@ public class Graphics {
 //			manager.add(circle);
 //		}
 		Sphere circle;
-		cen = new Point(2.5,1.25,.2);
-		circle = new Sphere(cen, 0.8,new Point(),.4,.5, 8);
-		circle.setReflection();
+		cen = new Point(2.5,1.5,.1);
+		circle = new Sphere(cen, 0.8,new Point(.1,.1,.1),.4,.5, 8);
+		circle.setReflection(.7);
 		manager.add(circle);
-		
-		cen=new Point(2.5, -1, .2);
+		cen = new Point(3,0,.6);
+		circle = new Sphere(cen, 0.3,new Point(1,0,0),.09,.04, 16);
+		circle.setReflection(.08);
+		manager.add(circle);
+		cen=new Point(2.5, -1.5, .1);
 		Sphere circle2 = new Sphere(cen, 0.8);
 		circle2.setRefraction();
 		manager.add(circle2);
@@ -54,19 +56,29 @@ public class Graphics {
 ////		triangle4.setColor(65535<<6);
 //		triangle4.setReflection();
 //		manager.add(triangle4);
-		Plane plane1 = new BWPlane(new Point(0,0,1), 10);
+		Plane plane1 = new BWPlane(new Point(0,0,1), 2);
 		manager.add(plane1);
 		
 		Plane plane2;
-		plane2= new Plane(new Point(.05,-1,0), 10);
+		plane2= new Plane(new Point(0,-1,0), 5);
+		plane2.setColor(0,0,1);
+		plane2.setReflection(.8);
 		manager.add(plane2);
-		plane2.setColor(0.3,0,.6);
-		plane2.setReflection();
-	
-		plane2= new Plane(new Point(.05,1,0), 10);
+		
+//		plane2= new Plane(new Point(-1,0,0), 10);
+//		plane2.setColor(0,.1,0);
+//		plane2.setReflection(1);
+//		manager.add(plane2);
+
+		plane2= new Plane(new Point(0,1,0), 5);
 		manager.add(plane2);
-		plane2.setColor(0,0.3,0);
-		plane2.setReflection();
+		plane2.setColor(0,0,1);
+		plane2.setReflection(0.8);
+		
+//		Base block = new Cube(new Point(-1.5, 0 ,0), 2, "arma.obj",0 , 0, 1);
+//		manager.add(block);
+		Base cuu = new Cube(new Point(0,2,0), .3);
+		manager.add(cuu);
 //		Sphere l1;
 //		for (int i=-16;i<-9;i+=2)
 //		{
@@ -75,41 +87,34 @@ public class Graphics {
 //			manager.addLight(l1);
 //		}
 
-		Sphere l2 = new Sphere(new Point(-3,1.9,0), licen);
+		Sphere l2 = new Sphere(new Point(-3,0,1), licen);
 		l2.setLight(1);
 		manager.addLight(l2);
 //		l2 = new Sphere(new Point(-13,0.3,0), licen);
 //		l2.setLight(1);
 //		manager.addLight(l2);
-		l2 = new Sphere(new Point(2,0,2.3), licen*2);
+		l2 = new Sphere(new Point(2,0.5,3.3), licen);
 		l2.setLight(1);
 		manager.addLight(l2);
-		Sphere l3 = new Sphere(new Point(2,-1.3,1.5), licen);
+		Sphere l3 = new Sphere(new Point(2,-.3,3.5), licen);
 		l3.setLight(1);
 		manager.addLight(l3);
 //		System.out.println(line);
 //		list.add(c2);
 //		System.out.println(circle.intersect(line));
-		// when draw, window and geometry should map
+
 		Bmp pic = new Bmp();
-		pic.setFile("he10.bmp");
+		pic.setFile("he14.bmp");
 		Trace trace = new Trace(manager,camera);
 		trace.workOutPicture(pic);
 		pic.write();
 		
-		/*pic = new Bmp();
-		pic.setFile("he5.bmp");
-		camera = new Camera(2);
-		for (int ix=0;ix<Options.WIDTH;ix++){
-			for (int iy=0;iy<Options.HEIGHT;iy++) {
-				int intclr;
-				intclr = trace.rayTracer(camera.getLineOfPixel(ix, iy), 0);
-				pic.setPixel(ix, iy, Options.WHITE-intclr);
-			}
-			System.out.println(100*ix/(Options.WIDTH-1)+" %");
-		}
-		pic.write();*/
-		
+//		pic = new Bmp();
+//		pic.setFile("she.bmp");
+//		camera = new Camera(2);
+//		trace = new Trace(manager,camera);
+//		trace.workOutPicture(pic);
+//		pic.write();
 	}
 
 }

@@ -16,7 +16,7 @@ public class Complex extends Base {
 //		list=new ArrayList<>();
 		points=new ArrayList<>();
 	}
-	public Complex(Point origin, double scale, String file) {
+	public Complex(Point origin, double scale, String file, double r, double g, double b) {
 		// TODO Auto-generated constructor stub
 		super();
 //		list=new ArrayList<>();
@@ -30,6 +30,7 @@ public class Complex extends Base {
 			String readin;
 			int t1,t2,t3;
 			double d1,d2,d3;
+			Point clr = new Point(r,g,b);
 			while (in.hasNext()) {
 				readin = in.next();
 				if (readin.charAt(0)=='#') in.nextLine();
@@ -47,8 +48,9 @@ public class Complex extends Base {
 						t1=in.nextInt()-1;
 						t2=in.nextInt()-1;
 						t3=in.nextInt()-1;
-						Triangle tmp= new Triangle(	points.get(t1),points.get(t2),points.get(t3) );
+						Triangle tmp= new Triangle(points.get(t2),points.get(t1),points.get(t3) );
 //						list.add(tmp);
+						tmp.setColor(clr);
 						set.add(tmp);
 					}
 				}

@@ -180,7 +180,7 @@ public class Kdtree {
 		if (point==null || lo==null || hi==null) return false;
 		boolean ret = true;
 		for (int i=0;i<3;i++) {
-			if (point.get(i) < lo.get(i) || point.get(i) > hi.get(i)) {
+			if (point.get(i) < lo.get(i)-Options.DOUBLE_EPS || point.get(i) > hi.get(i)+Options.DOUBLE_EPS) {
 				ret = false;break;
 			}
 		}
@@ -200,7 +200,7 @@ public class Kdtree {
 			Plane tmp = new Plane(Options.AXIS(i), -use[i]);
 			T_Point_Obj_Normal tmp2 = tmp.intersect_Everyone(line);
 			if (tmp2==null || tmp2.point==null) continue;
-			if (tmp2.t > t) {
+			if (tmp2.t > t ) {
 				t=tmp2.t;
 				ret=tmp2.point;
 			}

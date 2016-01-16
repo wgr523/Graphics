@@ -20,6 +20,7 @@ public class Plane extends Base {
 	@Override
 	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
+//		if (n.inner(l.w) < Options.DOUBLE_EPS*0.0000001) return null;
 		double ret = -(n.inner(l)+d)/(n.inner(l.w));
 		if (ret<Options.DOUBLE_EPS) return null;
 		Point tmp = new Point(l.w);

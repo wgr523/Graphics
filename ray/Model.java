@@ -14,8 +14,8 @@ public class Model {
 		return obj.getRhos()*tmp;
 	}*/
 	public static double S (Point v, Point l, Point n, double s, double rhos) {
-		Point tp = new Point(l);
-		tp.plus(v);
+		Point tp = new Point(v);
+		tp.minus(l);
 		tp =tp.normalize();
 		double tmp = Math.abs(Math.pow(n.inner(tp),s)/n.inner(l));
 //		System.out.println(obj.getRhos()*tmp);

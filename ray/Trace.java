@@ -1,5 +1,7 @@
 package ray;
 
+import java.util.Scanner;
+
 import bmp.Bmp;
 import geometry.Base;
 import geometry.Camera;
@@ -7,6 +9,7 @@ import geometry.Cube;
 import geometry.GManager;
 import geometry.Line;
 import geometry.Options;
+import geometry.Plane;
 import geometry.Point;
 import geometry.Sphere;
 import geometry.T_Point_Obj_Normal;
@@ -31,17 +34,23 @@ public class Trace {
 	}
 	public void workOutPictureAA(Bmp pic)
 	{
-		final int num=6;
+		Scanner sc = new Scanner(System.in);
+		int s1,s2;
+		System.out.println("Range (2 numbers):");
+		s1=sc.nextInt();s2=sc.nextInt();
+		final int num=4;
+		final int num2 =2;
 		final double del = (double)1/num;
-		for (int ix=0;ix<Options.WIDTH;ix++){
+		final double del2 = (double)1/num2;
+		for (int ix=s1;ix<s2;ix++){
 			for (int iy=0;iy<Options.HEIGHT;iy++){
 				Point intclr=new Point();
 				for (int id=0;id<num;id++)
 					for (int jd=0;jd<num;jd++)
-						for (int n=0;n<num;n++){
+						for (int n=0;n<num2;n++){
 							intclr.plus( rayTracer(camera.getLineOfPixelWithDelta(ix, iy, del*id+del*Math.random(), del*jd+del*Math.random()), 0));
 						}
-				intclr.times(del*del*del);
+				intclr.times(del*del*del2);
 				pic.setPixelReal(ix, iy, intclr.x, intclr.y, intclr.z);
 			}
 			System.out.println(100*ix/(Options.WIDTH-1)+" %");
@@ -49,7 +58,7 @@ public class Trace {
 	}
 	public void workOutPictureFocus(Bmp pic)
 	{
-		final int num=128;
+		final int num=64;
 		final double del = (double)1/num;
 		for (int ix=0;ix<Options.WIDTH;ix++){
 			for (int iy=0;iy<Options.HEIGHT;iy++){
@@ -72,12 +81,10 @@ public class Trace {
 		if (ret == null || ret.point == null) {return Options.BACKGROUND();}//background color, no intersection at all
 		else {
 			if (ret.obj.isLighted()) {
-				//				 乘以光强度(1 or other double)。
-//				System.out.println("Guang!");
-//				return Options.WHITE;
 				return Options.colorTimes(ret.obj.getColor(ret.point),ret.obj.getLight());
 //				color = Options.colorPlus(color , Options.colorTimes(ret.obj.getColor(),ret.obj.getLight()));
 			}
+			if (ret.obj instanceof Cube) System.out.println("qi le guai le"+ret.point);
 			Point color = Options.colorTimes(ret.obj.getColor(ret.point), Options.AMBIENT);
 			Point norm = ret.normal; // normal vec
 			for (Base baselight : manager.getLights(0)) 
@@ -97,16 +104,30 @@ public class Trace {
 					color = Options.colorPlus(color , 
 							Options.colorInner( ret.obj.getColor(ret.point),
 							Options.colorTimes(shed.obj.getColor(shed.point),
-									tolight.w.inner(norm)*
+//									Math.abs(
+											tolight.w.inner(norm)
+											*
 									ret.obj.getRhod()*
 									shed.obj.getLight())));
+//					if (ret.obj instanceof Plane)
+//						color = Options.colorPlus(color , 
+//								Options.colorInner( ret.obj.getColor(ret.point),
+//								Options.colorTimes(shed.obj.getColor(shed.point),
+//										.1*
+//										ret.obj.getRhod()*
+//										shed.obj.getLight())));
+//					else
 					color = Options.colorPlus(color , 
 							Options.colorInner( ret.obj.getColor(ret.point),
 							Options.colorTimes(shed.obj.getColor(shed.point),
-									tolight.w.inner(norm)*
+//									Math.abs(
+											tolight.w.inner(norm)
+											*
 									Model.S(tolight.w, line.w, norm, ret.obj.getS(), ret.obj.getRhos())*
 //									Math.pow(norm.inner(tolight.w.normalize()), s)*rhos/Math.abs(norm.inner(line.w))*
-									shed.obj.getLight())));
+									shed.obj.getLight())
+							)
+							);
 				}
 				
 			}

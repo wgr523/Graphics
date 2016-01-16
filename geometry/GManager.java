@@ -2,6 +2,7 @@ package geometry;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GManager {
 	ArrayList<Base> list;
@@ -19,7 +20,19 @@ public class GManager {
 		lights.add(base);
 	}
 	public T_Point_Obj_Normal getIntersect(Line line, int i) {
-		return Options.nearestIntersect(list, line);
+		T_Point_Obj_Normal tmp=null, ret=null;
+		double tmp2=Double.MAX_VALUE;
+		for (Iterator<Base> it = list.iterator();it.hasNext();) {
+			Base obj = it.next();
+			tmp = obj.intersect_Everyone(line);
+			if (tmp!=null && tmp.point!=null) {
+				if (tmp2>Options.DOUBLE_EPS && tmp.t < tmp2) {
+					tmp2=tmp.t;
+					ret=tmp;
+				}
+			}
+		}
+		return ret;
 	}
 	public List<Base> getList(int i){
 		return list;

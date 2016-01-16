@@ -6,6 +6,7 @@ public class Triangle extends Base {
 	Point x0,x1,x2,e1,e2;
 	
 	public Triangle(Point x0,Point x1,Point x2) {
+		super();
 		this.x0 = x0; this.x1=x1; this.x2=x2;
 		Point tmp = new Point(x0);
 		tmp.minus(x1);
@@ -17,7 +18,8 @@ public class Triangle extends Base {
 				e1.z*e2.y-e1.y*e2.z, 
 				e2.x*e1.z-e2.z*e1.x, 
 				e1.x*e2.y-e1.y*e2.x).normalize();
-		n.times(-1);
+//		if (n.inner(Options.LAW()) < 0)
+			n.times(-1);
 		d = -n.inner(this.x0);
 	}
 	

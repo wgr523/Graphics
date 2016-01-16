@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Cube extends Base {
-	Point lo,hi;
+	public Point lo,hi;
 
 	ArrayList<Triangle> list;
 	public Cube() {
@@ -66,36 +66,40 @@ public class Cube extends Base {
 //		root = Kdtree.createKdtree(set, 0);
 		calcHiLo();
 		System.out.println("Create ok!");
+		System.out.println(lo);
+		System.out.println(hi);
 	}
-	public Cube(Point origin) {
+	public Cube(Point origin, double scale) {
 		// TODO Auto-generated constructor stub
 		super();
-		Triangle [] t = new Triangle [12];
-		Point [] p = new Point [8];
-		int cnt=0;
-		for (int x3=0;x3<2;x3++)
-			for (int x2=0;x2<2;x2++)
-				for (int x1=0;x1<2;x1++) {
-					p[cnt] = new Point(x1,x2,x3);
-					p[cnt].plus(origin);
-					cnt++;
-				}
-		t[0]=new Triangle(p[0], p[1], p[5]);
-		t[1]=new Triangle(p[0], p[5], p[4]);
-		t[2]=new Triangle(p[1], p[3], p[7]);
-		t[3]=new Triangle(p[1], p[7], p[5]);
-		t[4]=new Triangle(p[3], p[2], p[6]);
-		t[5]=new Triangle(p[3], p[6], p[7]);
-		t[6]=new Triangle(p[2], p[6], p[4]);
-		t[7]=new Triangle(p[0], p[2], p[4]);
-		t[8]=new Triangle(p[0], p[2], p[3]);
-		t[9]=new Triangle(p[0], p[3], p[1]);
-		t[10]=new Triangle(p[4], p[7], p[6]);
-		t[11]=new Triangle(p[4], p[5], p[7]);
+		Triangle [] t = new Triangle [8];
+		Point [] p = new Point [6];
+		p[0]=new Point(0,0,1);
+		p[1]=new Point(0,-1,0);
+		p[2]=new Point(-1,0,0);
+		p[3]=new Point(0,1,0);
+		p[4]=new Point(1,0,0);
+		p[5]=new Point(0,0,-1);
+		for (int i=0;i<6;i++) {p[i].times(scale);p[i].plus(origin);}
+		t[0]=new Triangle(p[0], p[1], p[2]);
+		t[1]=new Triangle(p[0], p[2], p[3]);
+		t[2]=new Triangle(p[0], p[3], p[4]);
+		t[3]=new Triangle(p[0], p[4], p[1]);
+		t[4]=new Triangle(p[5], p[2], p[1]);
+		t[5]=new Triangle(p[5], p[3], p[2]);
+		t[6]=new Triangle(p[5], p[4], p[3]);
+		t[7]=new Triangle(p[5], p[1], p[4]);
+//		t[8]=new Triangle(p[0], p[2], p[3]);
+//		t[9]=new Triangle(p[0], p[3], p[1]);
+//		t[10]=new Triangle(p[4], p[7], p[6]);
+//		t[11]=new Triangle(p[4], p[5], p[7]);
 
 		list=new ArrayList<Triangle>();
-		for (int i=0;i<12;i++)
+		for (int i=0;i<8;i++)
 			list.add(t[i]);
+		calcHiLo();
+		System.out.println(lo);
+		System.out.println(hi);
 	}
 	void addTri(Triangle e) {
 		list.add(e);
@@ -127,7 +131,7 @@ public class Cube extends Base {
 	@Override
 	public T_Point_Obj_Normal intersect_Everyone(Line l) {
 		// TODO Auto-generated method stub
-//		if (! Kdtree.woo(lo, hi, l)) return null;
+//		if (! Kdtree.woo(lo, hi, l)) return new T_Point_Obj_Normal(0, null, null, null);
 		T_Point_Obj_Normal tmp;
 		double tmp2=Double.MAX_VALUE;
 		Point ret1 = null;
@@ -136,7 +140,7 @@ public class Cube extends Base {
 		for (Triangle e : list) {
 			tmp = e.intersect_Everyone(l);
 			if (tmp!=null && tmp.point!=null) {
-				if (tmp.t<tmp2) {
+				if (tmp2>Options.DOUBLE_EPS && tmp.t<tmp2) {
 					tmp2=tmp.t;
 					ret1 = tmp.point;
 					ret2 = e;
