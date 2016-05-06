@@ -107,23 +107,15 @@ public class Trace {
 						//				double rhos=ret.obj.getRhos();
 						//				double s=ret.obj.getS();
 						if (shed != null && shed.obj!=null && shed.obj.equals(light)) {
-							//					System.out.println("Mei you dang guang!!");
-//							color = Options.colorPlus(color , 
-//									Options.colorInner( ret.obj.getColor(ret.point),
 									tmpcolor.plus(Options.colorTimes(shed.obj.getColor(shed.point),
-													//									Math.abs(
 													tolight.w.inner(norm)
 													*
 													ret.obj.getRhod()*
 													shed.obj.getLight()));
-//							color = Options.colorPlus(color , 
-//									Options.colorInner( ret.obj.getColor(ret.point),
 									tmpcolor.plus(Options.colorTimes(shed.obj.getColor(shed.point),
-													//									Math.abs(
 													tolight.w.inner(norm)
 													*
 													Model.S(tolight.w, line.w, norm, ret.obj.getS(), ret.obj.getRhos())*
-													//									Math.pow(norm.inner(tolight.w.normalize()), s)*rhos/Math.abs(norm.inner(line.w))*
 													shed.obj.getLight())
 											
 									);
@@ -153,8 +145,6 @@ public class Trace {
 						Options.colorTimes(
 								rayTracer(r, depth+1), ret.obj.getRhorefract()));
 			}
-			//				return ret.obj.getColor();
-			//				return Options.colorInner(ret.obj.getColor() , color);
 			
 			return color;
 		}
